@@ -123,7 +123,7 @@ export function getWidget(schema, widget, registeredWidgets = {}) {
   throw new Error(`No widget "${widget}" for type "${type}"`);
 }
 
-function computeDefaults(schema, parentDefaults, definitions = {}) {
+export function computeDefaults(schema, parentDefaults, definitions = {}) {
   // Compute the defaults recursively: give highest priority to deepest nodes.
   let defaults = parentDefaults;
   if (isObject(defaults) && isObject(schema.default)) {
@@ -403,7 +403,7 @@ export function optionsList(schema) {
   }
 }
 
-function findSchemaDefinition($ref, definitions = {}) {
+export function findSchemaDefinition($ref, definitions = {}) {
   // Extract and use the referenced definition if we have it.
   const match = /^#\/definitions\/(.*)$/.exec($ref);
   if (match && match[1]) {

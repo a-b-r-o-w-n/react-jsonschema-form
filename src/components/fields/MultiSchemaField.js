@@ -1,34 +1,48 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import * as types from "../../types";
-import { getUiOptions, getWidget, guessType } from "../../utils";
+import {
+  getUiOptions,
+  getWidget,
+  guessType,
+  findSchemaDefinition,
+  computeDefaults,
+} from "../../utils";
 import { isValid } from "../../validate";
 
 class AnyOfField extends Component {
   constructor(props) {
     super(props);
 
-    const { formData, options } = this.props;
+    const { formData, options, registry } = this.props;
 
     this.state = {
-      selectedOption: this.getMatchingOption(formData, options),
+      selectedOption: this.getMatchingOption(
+        formData,
+        options,
+        registry.definitions
+      ),
     };
   }
 
   componentWillReceiveProps(nextProps) {
     const matchingOption = this.getMatchingOption(
       nextProps.formData,
-      nextProps.options
+      nextProps.options,
+      nextProps.registry.definitions
     );
 
-    if (matchingOption === this.state.selectedOption) {
+    if (
+      matchingOption === null ||
+      matchingOption === this.state.selectedOption
+    ) {
       return;
     }
 
     this.setState({ selectedOption: matchingOption });
   }
 
-  getMatchingOption(formData, options) {
+  getMatchingOption(formData, options, definitions) {
     for (let i = 0; i < options.length; i++) {
       const option = options[i];
 
@@ -66,7 +80,11 @@ class AnyOfField extends Component {
 
           augmentedSchema = shallowClone;
         } else {
-          augmentedSchema = Object.assign({}, option, requiresAnyOf);
+          augmentedSchema = Object.assign(
+            { definitions },
+            option,
+            requiresAnyOf
+          );
         }
 
         // Remove the "required" field as it's likely that not all fields have
@@ -76,20 +94,24 @@ class AnyOfField extends Component {
         if (isValid(augmentedSchema, formData)) {
           return i;
         }
-      } else if (isValid(options[i], formData)) {
+      } else if (isValid({ ...option, definitions }, formData)) {
         return i;
       }
     }
 
     // If the form data matches none of the options, use the first option
-    return 0;
+    return null;
   }
 
   onOptionChange = option => {
     const selectedOption = parseInt(option, 10);
-    const { formData, onChange, options } = this.props;
+    const { formData, onChange, options, registry } = this.props;
 
-    const newOption = options[selectedOption];
+    let newOption = options[selectedOption];
+
+    if ("$ref" in newOption) {
+      newOption = findSchemaDefinition(newOption.$ref, registry.definitions);
+    }
 
     // If the new option is of type object and the current data is an object,
     // discard properties added using the old option.
@@ -97,7 +119,7 @@ class AnyOfField extends Component {
       guessType(formData) === "object" &&
       (newOption.type === "object" || newOption.properties)
     ) {
-      const newFormData = Object.assign({}, formData);
+      const newFormData = computeDefaults(newOption, {}, registry.definitions);
 
       const optionsToDiscard = options.slice();
       optionsToDiscard.splice(selectedOption, 1);
