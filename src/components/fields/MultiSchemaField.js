@@ -8,27 +8,35 @@ class AnyOfField extends Component {
   constructor(props) {
     super(props);
 
-    const { formData, options } = this.props;
+    const { formData, options, registry } = this.props;
 
     this.state = {
-      selectedOption: this.getMatchingOption(formData, options),
+      selectedOption: this.getMatchingOption(
+        formData,
+        options,
+        registry.definitions
+      ),
     };
   }
 
   componentWillReceiveProps(nextProps) {
     const matchingOption = this.getMatchingOption(
       nextProps.formData,
-      nextProps.options
+      nextProps.options,
+      nextProps.registry.definitions
     );
 
-    if (matchingOption === this.state.selectedOption) {
+    if (
+      matchingOption === null ||
+      matchingOption === this.state.selectedOption
+    ) {
       return;
     }
 
     this.setState({ selectedOption: matchingOption });
   }
 
-  getMatchingOption(formData, options) {
+  getMatchingOption(formData, options, definitions) {
     for (let i = 0; i < options.length; i++) {
       const option = options[i];
 
@@ -66,7 +74,11 @@ class AnyOfField extends Component {
 
           augmentedSchema = shallowClone;
         } else {
-          augmentedSchema = Object.assign({}, option, requiresAnyOf);
+          augmentedSchema = Object.assign(
+            { definitions },
+            option,
+            requiresAnyOf
+          );
         }
 
         // Remove the "required" field as it's likely that not all fields have
@@ -76,13 +88,13 @@ class AnyOfField extends Component {
         if (isValid(augmentedSchema, formData)) {
           return i;
         }
-      } else if (isValid(options[i], formData)) {
+      } else if (isValid({ ...option, definitions }, formData)) {
         return i;
       }
     }
 
     // If the form data matches none of the options, use the first option
-    return 0;
+    return null;
   }
 
   onOptionChange = option => {
