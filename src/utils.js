@@ -130,6 +130,8 @@ export function computeDefaults(schema, parentDefaults, definitions = {}) {
     // For object defaults, only override parent defaults that are defined in
     // schema.default.
     defaults = mergeObjects(defaults, schema.default);
+  } else if ("const" in schema) {
+    defaults = schema.const;
   } else if ("default" in schema) {
     // Use schema defaults for this node.
     defaults = schema.default;
