@@ -166,7 +166,7 @@ class AnyOfField extends Component {
       <div className="panel panel-default panel-body">
         <div className="form-group">
           <Widget
-            id={`${idSchema.$id}_anyof_select`}
+            id={`${idSchema.__id}_anyof_select`}
             schema={{ type: "number", default: 0 }}
             onChange={this.onOptionChange}
             onBlur={onBlur}
