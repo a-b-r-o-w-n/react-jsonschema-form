@@ -159,6 +159,7 @@ class AnyOfField extends Component {
       options,
       registry,
       safeRenderCompletion,
+      schema,
       uiSchema,
     } = this.props;
 
@@ -189,9 +190,15 @@ class AnyOfField extends Component {
         <div className="form-group">
           <Widget
             id={`${idSchema.$id}_anyof_select`}
-            schema={{ type: "number", default: 0 }}
-            onChange={this.onOptionChange}
+            schema={{
+              type: "number",
+              default: 0,
+              title: schema.title,
+              description: schema.description,
+            }}
+            label={schema.title}
             onBlur={onBlur}
+            onChange={this.onOptionChange}
             onFocus={onFocus}
             value={selectedOption}
             options={{ enumOptions }}
