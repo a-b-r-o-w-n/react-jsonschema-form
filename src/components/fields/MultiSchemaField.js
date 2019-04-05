@@ -100,7 +100,7 @@ class AnyOfField extends Component {
     }
 
     // If the form data matches none of the options, use the first option
-    return null;
+    return 0;
   }
 
   onOptionChange = option => {
