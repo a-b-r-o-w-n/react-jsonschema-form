@@ -100,7 +100,7 @@ class AnyOfField extends Component {
     }
 
     // If the form data matches none of the options, use the first option
-    return null;
+    return 0;
   }
 
   onOptionChange = option => {
@@ -159,6 +159,7 @@ class AnyOfField extends Component {
       options,
       registry,
       safeRenderCompletion,
+      schema,
       uiSchema,
     } = this.props;
 
@@ -189,9 +190,15 @@ class AnyOfField extends Component {
         <div className="form-group">
           <Widget
             id={`${idSchema.__id}_anyof_select`}
-            schema={{ type: "number", default: 0 }}
-            onChange={this.onOptionChange}
+            schema={{
+              type: "number",
+              default: 0,
+              title: schema.title,
+              description: schema.description,
+            }}
+            label={schema.title}
             onBlur={onBlur}
+            onChange={this.onOptionChange}
             onFocus={onFocus}
             value={selectedOption}
             options={{ enumOptions }}
