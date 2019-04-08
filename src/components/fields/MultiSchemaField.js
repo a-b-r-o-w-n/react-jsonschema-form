@@ -135,6 +135,13 @@ class AnyOfField extends Component {
         }
       }
 
+      // discard undefined
+      for (const key in newFormData) {
+        if (newFormData[key] === undefined) {
+          delete newFormData[key];
+        }
+      }
+
       onChange(newFormData);
     } else {
       onChange(undefined);
