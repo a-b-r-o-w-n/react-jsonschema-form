@@ -237,9 +237,36 @@ export function isObject(thing) {
   return typeof thing === "object" && thing !== null && !Array.isArray(thing);
 }
 
+function removeUndefined(object) {
+  const obj = Object.assign({}, object); // Prevent mutation of source object.
+
+  if (obj === null) {
+    return null;
+  }
+
+  if (Array.isArray(obj)) {
+    return obj;
+  }
+
+  if (typeof obj === "object") {
+    for (const key in obj) {
+      if (obj[key] === undefined) {
+        delete obj[key];
+        continue;
+      }
+
+      if (typeof obj[key] === "object") {
+        obj[key] = removeUndefined(obj[key]);
+      }
+    }
+  }
+
+  return obj;
+}
+
 export function mergeObjects(obj1, obj2, concatArrays = false) {
   // Recursively merge deeply nested objects.
-  var acc = Object.assign({}, obj1); // Prevent mutation of source object.
+  var acc = removeUndefined(obj1);
   return Object.keys(obj2).reduce((acc, key) => {
     const left = obj1 ? obj1[key] : {},
       right = obj2[key];
