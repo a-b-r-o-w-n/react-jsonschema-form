@@ -129,7 +129,7 @@ export function computeDefaults(schema, parentDefaults, definitions = {}) {
   if (isObject(defaults) && isObject(schema.default)) {
     // For object defaults, only override parent defaults that are defined in
     // schema.default.
-    defaults = mergeObjects(defaults, schema.default);
+    defaults = removeUndefinedOrEmpty(mergeObjects(defaults, schema.default));
   } else if ("const" in schema) {
     defaults = schema.const;
   } else if ("default" in schema) {
@@ -160,7 +160,7 @@ export function computeDefaults(schema, parentDefaults, definitions = {}) {
           (defaults || {})[key],
           definitions
         );
-        return acc;
+        return removeUndefinedOrEmpty(acc);
       }, {});
 
     case "array":
@@ -186,7 +186,7 @@ export function computeDefaults(schema, parentDefaults, definitions = {}) {
         }
       }
   }
-  return defaults;
+  return removeUndefinedOrEmpty(defaults);
 }
 
 export function getDefaultFormState(_schema, formData, definitions = {}) {
@@ -237,7 +237,7 @@ export function isObject(thing) {
   return typeof thing === "object" && thing !== null && !Array.isArray(thing);
 }
 
-function removeUndefined(object) {
+function removeUndefinedOrEmpty(object) {
   const obj = Object.assign({}, object); // Prevent mutation of source object.
 
   if (obj === null) {
@@ -256,7 +256,12 @@ function removeUndefined(object) {
       }
 
       if (typeof obj[key] === "object") {
-        obj[key] = removeUndefined(obj[key]);
+        const result = removeUndefinedOrEmpty(obj[key]);
+        if (result === undefined || Object.keys(obj[key]).length === 0) {
+          delete obj[key];
+        } else {
+          obj[key] = result;
+        }
       }
     }
   }
@@ -266,7 +271,7 @@ function removeUndefined(object) {
 
 export function mergeObjects(obj1, obj2, concatArrays = false) {
   // Recursively merge deeply nested objects.
-  var acc = removeUndefined(obj1);
+  var acc = Object.assign({}, obj1); // Prevent mutation of source object.
   return Object.keys(obj2).reduce((acc, key) => {
     const left = obj1 ? obj1[key] : {},
       right = obj2[key];
