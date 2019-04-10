@@ -238,17 +238,17 @@ export function isObject(thing) {
 }
 
 function removeUndefinedOrEmpty(object) {
-  const obj = Object.assign({}, object); // Prevent mutation of source object.
-
-  if (obj === null) {
+  if (object === null) {
     return null;
   }
 
-  if (Array.isArray(obj)) {
-    return obj;
+  if (Array.isArray(object)) {
+    return object;
   }
 
-  if (typeof obj === "object") {
+  if (typeof object === "object") {
+    const obj = Object.assign({}, object); // Prevent mutation of source object.
+
     for (const key in obj) {
       if (obj[key] === undefined) {
         delete obj[key];
@@ -264,9 +264,11 @@ function removeUndefinedOrEmpty(object) {
         }
       }
     }
+
+    return obj;
   }
 
-  return obj;
+  return object;
 }
 
 export function mergeObjects(obj1, obj2, concatArrays = false) {
