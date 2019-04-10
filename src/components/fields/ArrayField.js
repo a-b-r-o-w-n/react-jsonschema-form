@@ -215,7 +215,7 @@ class ArrayField extends Component {
     return addable;
   }
 
-  onAddClick = event => {
+  onAddClick = (event, newItem = {}) => {
     event.preventDefault();
     const { schema, formData, registry = getDefaultRegistry() } = this.props;
     const { definitions } = registry;
@@ -225,7 +225,7 @@ class ArrayField extends Component {
     }
     this.props.onChange([
       ...formData,
-      getDefaultFormState(itemSchema, undefined, definitions),
+      getDefaultFormState(itemSchema, newItem, definitions),
     ]);
   };
 
@@ -406,6 +406,7 @@ class ArrayField extends Component {
       formContext,
       formData,
       rawErrors,
+      registry,
     };
 
     // Check if a custom render function was passed in
