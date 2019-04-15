@@ -129,7 +129,7 @@ export function computeDefaults(schema, parentDefaults, definitions = {}) {
   if (isObject(defaults) && isObject(schema.default)) {
     // For object defaults, only override parent defaults that are defined in
     // schema.default.
-    defaults = removeUndefinedOrEmpty(mergeObjects(defaults, schema.default));
+    defaults = mergeObjects(defaults, schema.default);
   } else if ("const" in schema) {
     defaults = schema.const;
   } else if ("default" in schema) {
@@ -160,7 +160,7 @@ export function computeDefaults(schema, parentDefaults, definitions = {}) {
           (defaults || {})[key],
           definitions
         );
-        return removeUndefinedOrEmpty(acc);
+        return acc;
       }, {});
 
     case "array":
@@ -186,7 +186,7 @@ export function computeDefaults(schema, parentDefaults, definitions = {}) {
         }
       }
   }
-  return removeUndefinedOrEmpty(defaults);
+  return defaults;
 }
 
 export function getDefaultFormState(_schema, formData, definitions = {}) {
@@ -235,40 +235,6 @@ export function isObject(thing) {
     return false;
   }
   return typeof thing === "object" && thing !== null && !Array.isArray(thing);
-}
-
-function removeUndefinedOrEmpty(object) {
-  if (object === null) {
-    return null;
-  }
-
-  if (Array.isArray(object)) {
-    return object;
-  }
-
-  if (typeof object === "object") {
-    const obj = Object.assign({}, object); // Prevent mutation of source object.
-
-    for (const key in obj) {
-      if (obj[key] === undefined) {
-        delete obj[key];
-        continue;
-      }
-
-      if (typeof obj[key] === "object") {
-        const result = removeUndefinedOrEmpty(obj[key]);
-        if (result === undefined || Object.keys(obj[key]).length === 0) {
-          delete obj[key];
-        } else {
-          obj[key] = result;
-        }
-      }
-    }
-
-    return obj;
-  }
-
-  return object;
 }
 
 export function mergeObjects(obj1, obj2, concatArrays = false) {
