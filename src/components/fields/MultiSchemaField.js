@@ -116,7 +116,7 @@ class AnyOfField extends Component {
     // If the new option is of type object and the current data is an object,
     // discard properties added using the old option.
     if (
-      guessType(formData) === "object" &&
+      guessType(formData) === "object" ||
       (newOption.type === "object" || newOption.properties)
     ) {
       const newFormData = computeDefaults(newOption, {}, registry.definitions);
