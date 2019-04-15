@@ -255,6 +255,10 @@ class ObjectField extends Component {
           readonly,
           disabled,
           required,
+          schema: schema.properties[name],
+          onChange: this.onPropertyChange(name, addedByAdditionalProperties),
+          onKeyChange: this.onKeyChange(name),
+          onDropPropertyClick: this.onDropPropertyClick,
         };
       }),
       readonly,
@@ -265,6 +269,7 @@ class ObjectField extends Component {
       schema,
       formData,
       formContext,
+      onChange: this.props.onChange,
     };
     return <Template {...templateProps} onAddClick={this.handleAddClick} />;
   }
