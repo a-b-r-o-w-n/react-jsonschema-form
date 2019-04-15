@@ -159,6 +159,24 @@ render((
 yourForm.submit();
 ```
 
+### Formatting form data
+It is possible to provide a custom data formatter that will be called everytime data is calculated. `formatData` can be used to enforce custom behavior such as removing empty objects or arrays.
+
+```js
+const formatData = (formData) => {
+  if (formData.length === 0) {
+    return null;
+  }
+
+  return formData;
+}
+
+render((
+  <Form schema={schema}
+        formatData={formatData} />
+), document.getElementById("app"));
+```
+
 ## Styling your forms
 
 This library renders form fields and widgets leveraging the [Bootstrap](http://getbootstrap.com/) semantics. That means your forms will be beautiful by default if you're loading its stylesheet in your page.
@@ -260,7 +278,7 @@ $ npm run tdd
 
 #### Code coverage
 
-Code coverage reports are generated using [nyc](https://github.com/istanbuljs/nyc) each time the `npm test-coverage` script is run. 
+Code coverage reports are generated using [nyc](https://github.com/istanbuljs/nyc) each time the `npm test-coverage` script is run.
 The full report can be seen by opening `./coverage/lcov-report/index.html`.
 
 ### Releasing

@@ -22,6 +22,7 @@ export default class Form extends Component {
     safeRenderCompletion: false,
     noHtml5Validate: false,
     ErrorList: DefaultErrorList,
+    formatData: data => data,
   };
 
   constructor(props) {
@@ -76,7 +77,7 @@ export default class Form extends Component {
       schema,
       uiSchema,
       idSchema,
-      formData,
+      formData: props.formatData(formData),
       edit,
       errors,
       errorSchema,
@@ -302,5 +303,6 @@ if (process.env.NODE_ENV !== "production") {
     safeRenderCompletion: PropTypes.bool,
     formContext: PropTypes.object,
     additionalMetaSchemas: PropTypes.arrayOf(PropTypes.object),
+    formatData: PropTypes.func,
   };
 }
