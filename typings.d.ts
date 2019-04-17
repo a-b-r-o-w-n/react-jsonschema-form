@@ -167,19 +167,19 @@ declare module "react-jsonschema-form" {
   export type ArrayFieldTemplateProps = {
     DescriptionField: React.StatelessComponent<{
       id: string;
-      description: string | React.ReactElement;
+      description?: string | React.ReactElement;
     }>;
     TitleField: React.StatelessComponent<{
       id: string;
-      title: string;
-      required: boolean;
+      title?: string;
+      required?: boolean;
     }>;
     canAdd: boolean;
     className: string;
     disabled: boolean;
     idSchema: IdSchema;
     items: ArrayFieldItem[];
-    onAddClick: (event: any, newItem: any) => void;
+    onAddClick: (event: any, newItem?: any) => void;
     readonly: boolean;
     required: boolean;
     schema: JSONSchema6;
