@@ -276,7 +276,7 @@ declare module "react-jsonschema-form/lib/utils" {
       formData: object
     ): JSONSchema6;
 
-  export function getUIOptions(uiSchema: UiSchema): { [key: string]: any };
+  export function getUiOptions(uiSchema: UiSchema): { [key: string]: any };
   export function findSchemaDefinition($ref: string, definitions: object): JSONSchema6Definition;
 }
 
