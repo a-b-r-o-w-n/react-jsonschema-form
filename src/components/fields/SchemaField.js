@@ -353,7 +353,7 @@ function SchemaFieldRender(props) {
         render the selection and let `StringField` component handle
         rendering
       */}
-      {schema.anyOf && !isSelect(schema) && (
+      {!uiSchema["ui:field"] && schema.anyOf && !isSelect(schema) && (
         <_AnyOfField
           disabled={disabled}
           errorSchema={errorSchema}
@@ -372,7 +372,7 @@ function SchemaFieldRender(props) {
         />
       )}
 
-      {schema.oneOf && !isSelect(schema) && (
+      {!uiSchema["ui:field"] && schema.oneOf && !isSelect(schema) && (
         <_OneOfField
           disabled={disabled}
           errorSchema={errorSchema}
