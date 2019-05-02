@@ -70,7 +70,7 @@ declare module "react-jsonschema-form" {
   };
 
   export type FieldId = {
-    $id: string;
+    __id: string;
   };
 
   export type IdSchema = FieldId & {
