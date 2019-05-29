@@ -271,9 +271,9 @@ declare module "@bfdesigner/react-jsonschema-form" {
   };
 }
 
-declare module "react-jsonschema-form/lib/utils" {
+declare module "@bfdesigner/react-jsonschema-form/lib/utils" {
   import { JSONSchema6, JSONSchema6Definition } from "json-schema";
-  import { FieldProps, UiSchema } from "react-jsonschema-form";
+  import { FieldProps, UiSchema } from "@bfdesigner/react-jsonschema-form";
 
   export interface IRangeSpec {
     min?: number;
@@ -296,9 +296,9 @@ declare module "react-jsonschema-form/lib/utils" {
   ): JSONSchema6Definition;
 }
 
-declare module "react-jsonschema-form/lib/validate" {
+declare module "@bfdesigner/react-jsonschema-form/lib/validate" {
   import { JSONSchema6Definition } from "json-schema";
-  import { AjvError } from "react-jsonschema-form";
+  import { AjvError } from "@bfdesigner/react-jsonschema-form";
 
   export default function validateFormData<T>(
     formData: T,
