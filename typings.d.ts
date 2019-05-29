@@ -1,4 +1,4 @@
-// Type definitions for react-jsonschema-form 1.3
+// Type definitions for @bfdesigner/react-jsonschema-form 1.4.1-0
 // Project: https://github.com/mozilla-services/react-jsonschema-form
 // Definitions by: Dan Fox <https://github.com/iamdanfox>
 //                 Ivan Jiang <https://github.com/iplus26>
@@ -11,7 +11,7 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.8
 
-declare module "react-jsonschema-form" {
+declare module "@bfdesigner/react-jsonschema-form" {
   import * as React from "react";
   import { JSONSchema6 } from "json-schema";
 
