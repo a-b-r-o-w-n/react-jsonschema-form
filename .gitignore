@@ -128,3 +128,6 @@ yarn.lock
 # Code coverage
 coverage
 .nyc_output
+
+# npm
+.npmrc
