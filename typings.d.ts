@@ -87,6 +87,7 @@ declare module "@bfdesigner/react-jsonschema-form" {
     value: any;
     required: boolean;
     disabled: boolean;
+    rawErrors: string[];
     readonly: boolean;
     autofocus: boolean;
     onChange: (value: any) => void;

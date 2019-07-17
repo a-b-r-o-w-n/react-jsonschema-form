@@ -8,6 +8,7 @@ import {
   getDefaultRegistry,
   getUiOptions,
   ADDITIONAL_PROPERTY_FLAG,
+  toIdSchema,
 } from "../../utils";
 
 function DefaultObjectFieldTemplate(props) {
@@ -222,6 +223,13 @@ class ObjectField extends Component {
         const addedByAdditionalProperties = schema.properties[
           name
         ].hasOwnProperty(ADDITIONAL_PROPERTY_FLAG);
+        const propertyIdSchema = toIdSchema(
+          schema.properties[name],
+          idSchema[name] ? idSchema[name].__id : idSchema.__id,
+          definitions,
+          (formData || {})[name],
+          idPrefix
+        );
         return {
           content: (
             <SchemaField
@@ -235,7 +243,7 @@ class ObjectField extends Component {
                   : uiSchema[name]
               }
               errorSchema={errorSchema[name]}
-              idSchema={idSchema[name]}
+              idSchema={propertyIdSchema}
               idPrefix={idPrefix}
               formData={(formData || {})[name]}
               onKeyChange={this.onKeyChange(name)}
