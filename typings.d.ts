@@ -1,4 +1,4 @@
-// Type definitions for @bfdesigner/react-jsonschema-form 1.4.1-0
+// Type definitions for @bfcomposer/react-jsonschema-form 1.4.1-0
 // Project: https://github.com/mozilla-services/react-jsonschema-form
 // Definitions by: Dan Fox <https://github.com/iamdanfox>
 //                 Ivan Jiang <https://github.com/iplus26>
@@ -11,7 +11,7 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.8
 
-declare module "@bfdesigner/react-jsonschema-form" {
+declare module "@bfcomposer/react-jsonschema-form" {
   import * as React from "react";
   import { JSONSchema6 } from "json-schema";
 
@@ -272,9 +272,9 @@ declare module "@bfdesigner/react-jsonschema-form" {
   };
 }
 
-declare module "@bfdesigner/react-jsonschema-form/lib/utils" {
+declare module "@bfcomposer/react-jsonschema-form/lib/utils" {
   import { JSONSchema6, JSONSchema6Definition } from "json-schema";
-  import { FieldProps, UiSchema } from "@bfdesigner/react-jsonschema-form";
+  import { FieldProps, UiSchema } from "@bfcomposer/react-jsonschema-form";
 
   export interface IRangeSpec {
     min?: number;
@@ -297,9 +297,9 @@ declare module "@bfdesigner/react-jsonschema-form/lib/utils" {
   ): JSONSchema6Definition;
 }
 
-declare module "@bfdesigner/react-jsonschema-form/lib/validate" {
+declare module "@bfcomposer/react-jsonschema-form/lib/validate" {
   import { JSONSchema6Definition } from "json-schema";
-  import { AjvError } from "@bfdesigner/react-jsonschema-form";
+  import { AjvError } from "@bfcomposer/react-jsonschema-form";
 
   export default function validateFormData<T>(
     formData: T,
