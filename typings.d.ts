@@ -274,7 +274,7 @@ declare module "@bfcomposer/react-jsonschema-form" {
 
 declare module "@bfcomposer/react-jsonschema-form/lib/utils" {
   import { JSONSchema6, JSONSchema6Definition } from "json-schema";
-  import { FieldProps, UiSchema } from "@bfcomposer/react-jsonschema-form";
+  import { FieldProps, UiSchema, IdSchema } from "@bfcomposer/react-jsonschema-form";
 
   export interface IRangeSpec {
     min?: number;
@@ -300,8 +300,8 @@ declare module "@bfcomposer/react-jsonschema-form/lib/utils" {
     schema: JSONSchema6Definition,
     id?: string,
     definitions?: any,
-    formData: any = {},
-    idPrefix: string = "root"
+    formData?: any,
+    idPrefix?: string
   ): IdSchema;
 }
 
