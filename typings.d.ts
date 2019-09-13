@@ -295,6 +295,14 @@ declare module "@bfcomposer/react-jsonschema-form/lib/utils" {
     $ref: string,
     definitions: object
   ): JSONSchema6Definition;
+
+  export function toIdSchema(
+    schema: JSONSchema6Definition,
+    id?: string,
+    definitions?: any,
+    formData: any = {},
+    idPrefix: string = "root"
+  ): IdSchema;
 }
 
 declare module "@bfcomposer/react-jsonschema-form/lib/validate" {
